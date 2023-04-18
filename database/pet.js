@@ -15,13 +15,14 @@ const Pet = connection.define("pet", {
         allowNull: false
     },
     dataNasc:{
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
 
     }
 });
+const Cliente = require("./cliente");
+
 
 Cliente.hasMany(Pet);
-
 Pet.belongsTo(Cliente);
 
 module.exports = Pet;
