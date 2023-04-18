@@ -34,6 +34,36 @@ app.post("/clientes", async (req,res) =>{
         res.status(500).json({message: "Um erro ocorreu."});
     }
 })
+
+app.put("/clientes/:id", async (req, res) =>{
+    const { nome, email, telefone, endereco} = req.body;
+    const {id} = req.params;
+    try{
+        const cliente = await Cliente.findOne({where: {id}});
+        if(cliente){
+            if(endereco){
+                await Endereco.update(endereco, {where: {clienteId: id}});
+            }
+            await cliente.update({nome, email, telefone});
+            res.json({message:"Cliente editado com sucesso"});
+        }else{
+            res.status(404).json({message: "Cliente não encontrado"});
+        }
+    }catch(err){
+        res.status(500).json({messsage: `Um erro ocorreu: \n ${err}`});
+    }
+})
+
+app.delete("/clientes/:id", async (req,res) =>{
+    const {id} = req.params;
+    const cliente = await Cliente.findOne({where:{id}});
+    if(cliente){
+        cliente.destroy();
+        res.json({message: "Cliente deletado"});
+    }else{
+        res.status(404).json({message: "Cliente não encontrado"});
+    }
+})
 //Eventos
 
 app.listen(3000,()=>{
