@@ -22,7 +22,7 @@ const Pet = connection.define("pet", {
 const Cliente = require("./cliente");
 
 
-Cliente.hasMany(Pet);
+Cliente.hasMany(Pet, {onDelete:"CASCADE"});
 Pet.belongsTo(Cliente);
 
 module.exports = Pet;

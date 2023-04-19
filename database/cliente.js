@@ -20,7 +20,7 @@ const Cliente = connection.define("cliente",{
 
 const Endereco = require("./endereco");
 
-Cliente.hasOne(Endereco); // Cliente tem 1 endereco
+Cliente.hasOne(Endereco, {onDelete:"CASCADE"}); // Cliente tem 1 endereco
 
 Endereco.belongsTo(Cliente); // Endereco pertence a 1 cliente
 
